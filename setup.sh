@@ -5,6 +5,8 @@ PROG_NAME=$0
 Downloads="$HOME/Downloads"
 TMUX_PATH="$HOME/.tmux"
 TMUX_FILE="$HOME/.tmux.conf"
+#VIM_VERSION=$(vim --version | head -1 | cut -d ' ' -f 5) 
+VIM_VERSION=$(vim --version | head -1 | grep -o '[0-9]\.[0-9]')
 
 # print info
 
@@ -17,11 +19,41 @@ echo "\$HOME=$HOME"
 curl -V
 
 prepare() {
-   if [ ! -x $HOME/Downloads ];then
-       mkdir $HOME/Downloads
-   fi
+    if [ ! -x $HOME/Downloads ];then
+        mkdir $HOME/Downloads
+    fi
+    yum install bc
+    yum install ctags git tcl-devel \
+        ruby ruby-devel \
+        lua lua-devel \
+        luajit luajit-devel \
+        python python-devel \
+        perl perl-devel \
+        perl-ExtUtils-ParseXS \
+        perl-ExtUtils-XSpp \
+        perl-ExtUtils-CBuilder \
+        perl-ExtUtils-Embed
 }
 
+install_vim() {
+    wget -O $Downloads/v8.1.0513.tar.gz  https://github.com/vim/vim/archive/v8.1.0513.tar.gz
+    cd $Downloads
+    tar -xvzf v8.1.0513.tar.gz
+
+    cd vim-8.1.0513/
+    ./configure --prefix=/usr/local \
+      --enable-multibyte \
+      --enable-rubyinterp \
+      --enable-pythoninterp \
+      --enable-perlinterp \
+      --enable-luainterp
+    make 
+    make install
+    alias vim='/usr/local/bin/vim'
+    echo "alias vim='/usr/local/bin/vim'" >> ~/.bashrc
+    echo "alias vim='/usr/local/bin/vim'" >> ~/.zshrc
+    vim -version
+}
 
 if [ ${OS} == "Darwin"  ];then
     prepare
@@ -120,6 +152,17 @@ elif [ ${OS} == "Linux"  ];then
             ln -s -f .tmux/.tmux.conf
             cp .tmux/.tmux.conf.local .
         fi
+
+        # vim 
+        if [ $(echo "$VIM_VERSION <= 8.0" | bc -l) ]; then
+            # echo "Now remove low version's vim editor.."
+            # sudo command deps on vim-minimal
+            # $yumdnf remove vim*
+            echo "Current Version: vim $VIM_VERSION , now install vim v8.1 ..."
+            install_vim
+            echo "vim install successfully."
+        fi
+        
         ;;
     *)
         exit 1
