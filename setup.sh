@@ -7,6 +7,8 @@ TMUX_PATH="$HOME/.tmux"
 TMUX_FILE="$HOME/.tmux.conf"
 #VIM_VERSION=$(vim --version | head -1 | cut -d ' ' -f 5) 
 VIM_VERSION=$(vim --version | head -1 | grep -o '[0-9]\.[0-9]')
+VIM_DIR_PATH="$HOME/.vim"
+VIM_RC_FILE="$HOME/.vimrc"
 
 # print info
 
@@ -41,18 +43,28 @@ install_vim() {
     tar -xvzf v8.1.0513.tar.gz
 
     cd vim-8.1.0513/
-    ./configure --prefix=/usr/local \
-      --enable-multibyte \
-      --enable-rubyinterp \
-      --enable-pythoninterp \
-      --enable-perlinterp \
-      --enable-luainterp
+    ./configure --prefix=/usr/local --enable-fail-if-missing --with-features=huge --enable-multibyte --enable-python3interp=yes --with-python3-config-dir=/usr/local/python3.7/lib/python3.7/config-3.7m-x86_64-linux-gnu --enable-rubyinterp=yes --enable-perlinterp=yes --enable-luainterp=yes 
     make 
     make install
     alias vim='/usr/local/bin/vim'
     echo "alias vim='/usr/local/bin/vim'" >> ~/.bashrc
     echo "alias vim='/usr/local/bin/vim'" >> ~/.zshrc
-    vim -version
+    vim --version
+}
+
+install_python3() {
+    if ! [ -x "$(command -v python3)" ]; then
+        cd $Downloads
+        wget https://www.python.org/ftp/python/3.7.0/Python-3.7.0.tar.xz
+        tar xvf Python-3.7.0.tar.xz
+        yum -y install gcc gcc-c++ zlib-devel bzip2 bzip2-devel python-devel readline-devel sqlite sqlite-devel openssl-devel tk-devel libffi-devel
+        cd Python-3.7.0
+        ./configure --prefix=/usr/local/python3.7
+        make
+        make install
+        # ln -s /usr/local/python3.7/bin/python3 /usr/bin/python3
+        # ln -s /usr/local/python3.7/bin/pip3 /usr/bin/pip3
+    fi
 }
 
 if [ ${OS} == "Darwin"  ];then
@@ -113,6 +125,9 @@ elif [ ${OS} == "Linux"  ];then
             echo "zsh Install Finished."
         fi
 
+        # --- python ---
+        install_python3
+
         # --- tmux  ---
         if [ ! -x "$(command -v tmux)" ];then
             echo "Now Install Tmux..."
@@ -161,6 +176,10 @@ elif [ ${OS} == "Linux"  ];then
             echo "Current Version: vim $VIM_VERSION , now install vim v8.1 ..."
             install_vim
             echo "vim install successfully."
+        fi
+
+        if [ ! -d $VIM_PATH ] || [ ! -f $VIM_RC_FILE ]; then
+            echo "Now config vim."
         fi
         
         ;;
