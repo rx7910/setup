@@ -47,8 +47,14 @@ install_vim() {
     make
     make install
     alias vim='/usr/local/bin/vim'
-    echo "alias vim='/usr/local/bin/vim'" >> ~/.bashrc
-    echo "alias vim='/usr/local/bin/vim'" >> ~/.zshrc
+    export EDITOR='/usr/local/bin/vim'
+    alias vi="vim"
+    cat << EOF | tee -a ~/.bashrc ~/.zshrc
+alias vim='/usr/local/bin/vim'
+export EDITOR='/usr/local/bin/vim'
+alias vi="vim"
+EOF
+
     vim --version
 }
 
@@ -176,6 +182,7 @@ elif [ ${OS} == "Linux"  ];then
             echo "Current Version: vim $VIM_VERSION , now install vim v8.1 ..."
             install_vim
             echo "vim install successfully."
+
         fi
 
         if [ ! -d $VIM_PATH ] || [ ! -f $VIM_RC_FILE ]; then
@@ -187,9 +194,23 @@ elif [ ${OS} == "Linux"  ];then
         git clone git://github.com/wting/autojump.git
         cd autojump
         ./install.py
+        cat << EOF | tee -a ~/.zshrc ~/.bashrc
+
+# autojump
+[[ -s /home/rx7910/.autojump/etc/profile.d/autojump.sh   ]] && source /home/rx7910/.autojump/etc/profile.d/autojump.sh
+autoload -U compinit && compinit -u
+
+EOF
 
         # nvm
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash
+        cat << EOF | tee -a ~/.zshrc ~/.bashrc
+
+# nvm config
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}"  ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh"  ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+EOF
 
         ;;
     *)
