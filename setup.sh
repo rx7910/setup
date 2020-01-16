@@ -5,7 +5,7 @@ PROG_NAME=$0
 Downloads="$HOME/Downloads"
 TMUX_PATH="$HOME/.tmux"
 TMUX_FILE="$HOME/.tmux.conf"
-#VIM_VERSION=$(vim --version | head -1 | cut -d ' ' -f 5) 
+#VIM_VERSION=$(vim --version | head -1 | cut -d ' ' -f 5)
 VIM_VERSION=$(vim --version | head -1 | grep -o '[0-9]\.[0-9]')
 VIM_DIR_PATH="$HOME/.vim"
 VIM_RC_FILE="$HOME/.vimrc"
@@ -43,8 +43,8 @@ install_vim() {
     tar -xvzf v8.1.0513.tar.gz
 
     cd vim-8.1.0513/
-    ./configure --prefix=/usr/local --enable-fail-if-missing --with-features=huge --enable-multibyte --enable-python3interp=yes --with-python3-config-dir=/usr/local/python3.7/lib/python3.7/config-3.7m-x86_64-linux-gnu --enable-rubyinterp=yes --enable-perlinterp=yes --enable-luainterp=yes 
-    make 
+    ./configure --prefix=/usr/local --enable-fail-if-missing --with-features=huge --enable-multibyte --enable-python3interp=yes --with-python3-config-dir=/usr/local/python3.7/lib/python3.7/config-3.7m-x86_64-linux-gnu --enable-rubyinterp=yes --enable-perlinterp=yes --enable-luainterp=yes
+    make
     make install
     alias vim='/usr/local/bin/vim'
     echo "alias vim='/usr/local/bin/vim'" >> ~/.bashrc
@@ -80,7 +80,7 @@ if [ ${OS} == "Darwin"  ];then
         echo "iTerm2 Download Finished"
     fi
 
-    if [ ! -e $HOME/.oh-my-zsh ]; then 
+    if [ ! -e $HOME/.oh-my-zsh ]; then
         sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     fi
 
@@ -112,7 +112,7 @@ elif [ ${OS} == "Linux"  ];then
         # wget
         if ! [ -x "$(command -v wget)" ]; then
             echo "Now Install wget.."
-            $yumdnf install wget 
+            $yumdnf install wget
             echo "wget Install Finished."
         fi
 
@@ -168,7 +168,7 @@ elif [ ${OS} == "Linux"  ];then
             cp .tmux/.tmux.conf.local .
         fi
 
-        # vim 
+        # vim
         if [ $(echo "$VIM_VERSION <= 8.0" | bc -l) ]; then
             # echo "Now remove low version's vim editor.."
             # sudo command deps on vim-minimal
@@ -181,7 +181,16 @@ elif [ ${OS} == "Linux"  ];then
         if [ ! -d $VIM_PATH ] || [ ! -f $VIM_RC_FILE ]; then
             echo "Now config vim."
         fi
-        
+
+        # autojump
+        cd $Downloads
+        git clone git://github.com/wting/autojump.git
+        cd autojump
+        ./install.py
+
+        # nvm
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash
+
         ;;
     *)
         exit 1
