@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 OS=`uname -s`
+EXECUTING_DIR=$(pwd)
 PROG_NAME=$0
 Downloads="$HOME/Downloads"
 TMUX_PATH="$HOME/.tmux"
@@ -89,6 +90,39 @@ if [ ${OS} == "Darwin"  ];then
     if [ ! -e $HOME/.oh-my-zsh ]; then
         sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     fi
+
+    ## install vim
+    brew uninstall vim
+    cd ~/Downloads
+    curl -OL "https://github.com/vim/vim/archive/v8.2.0194.tar.gz"
+    tar -xvzf v8.2.0194.tar.gz
+    cd vim-8.2.0194
+    ## NOTICE: make sure your python3 and lua are installed & configured correctly before executing the follow command
+    ./configure --prefix=/usr/local --enable-fail-if-missing --with-features=huge --enable-multibyte --enable-python3interp=yes --with-python3-config-dir=/usr/local/Cellar/python/3.7.6_1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/config-3.7m-darwin --enable-rubyinterp=yes --enable-perlinterp=yes --enable-luainterp=yes --with-lua-prefix=/usr/local/Cellar/lua/5.3.5_1
+    make && make install
+    
+    cat << EOF | tee -a ~/.bashrc ~/.zshrc
+alias vim='/usr/local/bin/vim'
+export EDITOR='/usr/local/bin/vim'
+alias vi="vim"
+EOF
+    
+    source ~/.bashrc
+    vim --version
+    cd
+    ln -s $EXECUTING_DIR/.vimrc .vimrc
+    source .vimrc
+    ## vim-plug
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+	        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    vim +'PlugInstall --sync' +qa
+    ## you complete me
+    cd ~/.vim/plugged/YouCompleteMe
+    brew install go cmake gcc 
+    brew tap AdoptOpenJDK/openjdk
+    brew cask install adoptopenjdk12
+    python3 install.py --ts-completer --java-completer --go-completer --clangd-completer --js-completer
+    
 
 elif [ ${OS} == "Linux"  ];then
     source /etc/os-release
