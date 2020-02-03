@@ -121,6 +121,7 @@ EOF
     brew install go cmake gcc 
     brew tap AdoptOpenJDK/openjdk
     brew cask install adoptopenjdk12
+    java -version
     python3 install.py --ts-completer --java-completer --go-completer --clangd-completer --js-completer
     
 

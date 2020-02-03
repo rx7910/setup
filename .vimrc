@@ -42,5 +42,8 @@ Plug 'maxmellon/vim-jsx-pretty'
 " You Complete Me
 Plug 'Valloric/YouCompleteMe'
 
+" auto pairs
+Plug 'jiangmiao/auto-pairs'
+
 " Initialize plugin system
 call plug#end()
