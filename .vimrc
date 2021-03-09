@@ -86,4 +86,12 @@ map <C-f> :NERDTreeToggle<CR>
 
 set backspace=indent,eol,start
 
+" set <leader>
+let mapleader = ","
+
+" mapping edit vimrc file
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+
+" mapping source vimrc file
+nnoremap <leader>sv :source $MYVIMRC<cr>
 
