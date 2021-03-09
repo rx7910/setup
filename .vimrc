@@ -72,7 +72,7 @@ endfunction
 """"""""""""""""""""""""""""""
 
 " nerftree
-DTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 "Making it prettier
 let NERDTreeMinimalUI = 1
@@ -83,4 +83,7 @@ let NERDTreeDirArrows = 1
 " key binding
 """"""""""""""""""""""""""""""
 map <C-f> :NERDTreeToggle<CR>
-'
+
+set backspace=indent,eol,start
+
+
