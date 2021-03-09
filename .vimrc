@@ -89,9 +89,17 @@ set backspace=indent,eol,start
 " set <leader>
 let mapleader = ","
 
+" set file pos using frequently
+let $FP_V2RAY_PAC="~/Library/Application Support/V2RayX/pac/pac.js"
+
 " mapping edit vimrc file
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 
+" mapping edit file
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>pac :vsplit $FP_V2RAY_PAC<cr>
+
 " mapping source vimrc file
 nnoremap <leader>sv :source $MYVIMRC<cr>
+
 
