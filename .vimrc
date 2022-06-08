@@ -48,7 +48,11 @@ Plug 'Valloric/YouCompleteMe'
 " auto pairs
 Plug 'jiangmiao/auto-pairs'
 
-" https://github.com/mhinz/vim-startify#installation-and-documentation
+" airline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" vim开始页 https://github.com/mhinz/vim-startify#installation-and-documentation
 Plug 'mhinz/vim-startify'
 
 " 垂直对其线 https://github.com/Yggdroot/indentLine
@@ -87,6 +91,10 @@ endfunction
 """"""""""""""""""""""""""""""
 " plugin config
 """"""""""""""""""""""""""""""
+
+" airline theme
+" see: https://github.com/vim-airline/vim-airline/wiki/Screenshots
+let g:airline_theme='deus'
 
 " devicons
 let g:airline_powerline_fonts = 1
