@@ -48,6 +48,20 @@ Plug 'Valloric/YouCompleteMe'
 " auto pairs
 Plug 'jiangmiao/auto-pairs'
 
+" https://github.com/mhinz/vim-startify#installation-and-documentation
+Plug 'mhinz/vim-startify'
+
+" 垂直对其线 https://github.com/Yggdroot/indentLine
+Plug 'Yggdroot/indentLine'
+
+" 图标颜色 https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+
+" file icons see: https://github.com/ryanoasis/vim-devicons
+" brew tap homebrew/cask-fonts && brew install --cask font-hack-nerd-font
+" see: https://github.com/ryanoasis/nerd-fonts#font-installation
+Plug 'ryanoasis/vim-devicons'
+
 " Initialize plugin system
 call plug#end()
 
@@ -74,6 +88,11 @@ endfunction
 " plugin config
 """"""""""""""""""""""""""""""
 
+" devicons
+let g:airline_powerline_fonts = 1
+let g:webdevicons_enable_nerdtree = 1
+
+
 " nerftree
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
@@ -90,6 +109,7 @@ let NERDTreeDirArrows = 1
 
 set backspace=indent,eol,start
 set number
+set encoding=UTF-8
 
 " set <leader>
 let mapleader = ","
