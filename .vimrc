@@ -75,6 +75,12 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " see: https://github.com/ryanoasis/nerd-fonts#font-installation
 Plug 'ryanoasis/vim-devicons'
 
+" emmet
+Plug 'mattn/emmet-vim'
+
+" go
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
 " Initialize plugin system
 call plug#end()
 
