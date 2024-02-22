@@ -130,3 +130,6 @@ export GOPROXY=https://goproxy.cn
 
 # typora
 alias typora="open -a typora"
+
+# change git language to english
+alias git='LANG=en_GB git'
