@@ -21,9 +21,6 @@ Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 " Using a non-master branch
 " Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 
-" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
-Plug 'fatih/vim-go', { 'tag': '*' }
-
 " Plugin options
 Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 
@@ -37,10 +34,10 @@ Plug '~/my-prototype-plugin'
 Plug 'https://github.com/pangloss/vim-javascript.git'
 
 " TypeScript syntax
-Plug 'leafgarland/typescript-vim' 
+" Plug 'leafgarland/typescript-vim' 
 
 " TypeScript Completation. 
-Plug 'Quramy/tsuquyomi'
+" Plug 'Quramy/tsuquyomi'
 
 " syntax checking plugin
 Plug 'vim-syntastic/syntastic'
@@ -79,7 +76,10 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'mattn/emmet-vim'
 
 " go
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
+Plug 'fatih/vim-go', { 'tag': '*' }
 
 " Initialize plugin system
 call plug#end()
